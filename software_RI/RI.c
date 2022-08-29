@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <locale.h>
 
+// Trata texto, retirando sinais ortográficos, aumentando compatibilidade e otimizando identificação de textos
 char trata_texto(char texto[999999])
 {
     for (int i = 0; i < strlen(texto) - 1; i++)
@@ -233,9 +235,50 @@ void prefixo_sufixo_array_palavra(char *pont2, int tamanho_palavra, int *pont1)
     }
 }
 
+char *copia_frase(char *dst, char *src, int start, int end)
+{
+    return strncpy(dst, src + start, end);
+}
+
+char *monta_frase(char texto[999999], char palavra[20], int aux)
+{
+    int indice_inicial = strlen(palavra) + 41;
+    char *frase = malloc(strlen(texto));
+
+    do
+    {
+        if (!strncmp(texto + aux, palavra, strlen(palavra)))
+        {
+
+            frase = copia_frase(frase, texto, (aux - indice_inicial), (aux));
+            return frase;
+
+            aux += strlen(palavra);
+        }
+        else
+        {
+            aux += 1;
+        }
+    } while (aux < strlen(texto));
+}
+
+void monta_aparicoes(char frase_inserida[5000], int paginas)
+{
+    FILE *arq;
+    char caracteres_frase[150];
+
+    memcpy(caracteres_frase, &frase_inserida[0], 150);
+    caracteres_frase[150] = '\0';
+
+    arq = fopen("aparicoes.txt", "a");
+
+    fprintf(arq, "Aparicao da pagina %d - %s\n", paginas, caracteres_frase);
+}
+
 int contador_palavra(int contador_pagina, int contador_texto, int paginas, char texto[999999], char palavra[20])
 {
-    int aux = 0;
+    int aux = 0, aux_pagina = 0;
+    char *frase = malloc(strlen(texto));
 
     paginas--;
 
@@ -244,6 +287,8 @@ int contador_palavra(int contador_pagina, int contador_texto, int paginas, char 
         if (!strncmp(texto + aux, palavra, strlen(palavra)))
         {
             contador_pagina++;
+            frase = monta_frase(texto, palavra, aux);
+            monta_aparicoes(frase, paginas);
             aux += strlen(palavra);
         }
         else
@@ -252,7 +297,12 @@ int contador_palavra(int contador_pagina, int contador_texto, int paginas, char 
         }
     } while (aux < strlen(texto));
 
+    if (contador_pagina != 0)
+    {
+        printf("Total de aparicoes na pagina %d: %d aparicoes\n\n", paginas, contador_pagina);
+    }
     contador_texto += contador_pagina;
+    aux_pagina--;
 
     return contador_texto;
 }
@@ -319,33 +369,37 @@ void monta_rank(int paginas_rank[9999], int paginas, int contador_texto)
 
 int main()
 {
-    SetConsoleOutputCP(65001);
+    // HtmlElement execucao = webBrowser.Document.GetElementById("btn_buscar");
 
-    FILE *arquivo;
+    SetConsoleOutputCP(65001);
+    setlocale(LC_ALL, "");
+
+    FILE *arq;
     char texto[999999];
     int paginas_rank[9999];
-    char palavra[20];
+    char palavra[20] = {'C', 'a', 'p', 'i', 't', 'u'};
     char pags[20] = "Pagina";
     char new_pags[20];
     int contador_pagina = 0, contador_texto = 0, auxiliar = 1, paginas = 1, aux2 = 1;
 
     snprintf(new_pags, 10, "%s %d", pags, paginas);
 
-    arquivo = system("python LendoPdf.py");
-    arquivo = fopen("texto.txt", "r");
+    arq = system("python LendoPdf.py");
+    arq = fopen("aparicoes.txt", "w");
+    arq = fopen("texto.txt", "r");
 
-    if (arquivo == NULL)
+    if (arq == NULL)
     {
         return 0;
     }
 
-    while (fgets(texto, 999999, arquivo) != NULL)
+    while (fgets(texto, 999999, arq) != NULL)
     {
         if (auxiliar == 1)
         {
-            printf("\nInsira a palavra que deseja buscar: ");
-            fgets(palavra, 20, stdin);
-            printf("\n");
+            //printf("\nInsira a palavra que deseja buscar: ");
+            //fgets(palavra, 20, stdin);
+            //palavra = 
             palavra[strlen(palavra) - 1] = '\0';
             auxiliar++;
         }
@@ -363,7 +417,7 @@ int main()
         paginas_rank[paginas] = contador_rank(contador_pagina, contador_texto, paginas, texto, palavra, paginas_rank);
     }
 
-    printf("Total de aparições: %d aparições\n\n", contador_texto);
+    printf("Total de aparicoes: %d aparicoes\n\n", contador_texto);
     monta_rank(paginas_rank, paginas, contador_texto);
 
     return 0;

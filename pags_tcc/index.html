@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>RI - Resumo Inteligente</title>
+
+    <meta charset="utf-8">
+    <meta name="author" content="SGD" />
+    <meta name="keywords" content="Resumo, Artigos Científicos, Obras Literárias, Material Didádico, Síntese, Palavras, Expressões, Aparição, Relevância />
+    <meta name=" description"
+        content="Software que realiza a busca de palavras e expressões em livros e artigos com ranqueamento por aparição e relevância" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+</head>
+
+<body>
+    <header>
+        <img src="img/banner.png" alt="Banner do software RI" />
+    </header>
+
+    <section id="sec_titulo">
+        <h1>Resumo Inteligente</h1>
+        <h2>Dê um salto na sua leitura!!!</h2>
+    </section>
+
+    <article>
+
+        <p> O Resumo Inteligente é um software capaz de auxiliar seus usuários em uma leitura, entregando uma maior
+            capacidade de sintetização junto à uma interpretação mais clara. Com isso, tem-se a função de busca por
+            palavra, que particiona as aparições ranqueando por página e, também, coloca a possibilidade de saber os 30
+            caracteres que aparecem antes e depois de uma aparição específica. </p>
+
+    </article>
+
+    <section id="sec_instrucoes">
+
+        <h1>Como usar?</h1>
+
+        <ol>
+            <li>Escolha o arquivo</li>
+            <li>Escreva a palavra</li>
+            <li>Busque</li>
+        </ol>
+
+        <h3>Fácil né? Tá esperando o quê para experimentar?</h3>
+
+    </section>
+
+
+
+    <section id="sec_busca">
+
+        <form name="" method="" onsubmit="fazer_busca()"></form>
+
+        <center>
+            <div id="botoes_form">
+
+                <input type="file" id="input_file" required />
+                <input type="text" name="busca" id="input_text" size="40" placeholder="Palavra a ser buscada"
+                    required />
+                <a href="rank.html">
+                    <input id="btn_buscar" type="submit" name="btn_buscar" value="BUSCAR" />
+                </a>
+
+            </div>
+        </center>
+
+        </form>
+
+    </section>
+
+    <footer>
+
+        <p>
+            Desenvolvido por Davi Speck - 2021
+        </p>
+
+    </footer>
+
+</html>

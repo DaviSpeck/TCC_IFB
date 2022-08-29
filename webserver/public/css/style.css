@@ -1,0 +1,189 @@
+/*Home Page*/
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans&display=swap');
+
+*{margin:0; padding: 0;}
+
+body{
+    background-color: white;
+    }
+    
+header, img{
+    width: 100%;
+    height: 800px;
+}
+
+section{
+	padding: 20px;
+	margin-bottom: 2px;
+}
+
+#sec_titulo{
+    background-color: black;
+}
+
+h1{
+	font-family: Anton-Regular, sans-serif;
+	font-size: 48px;
+	color: white;
+	text-align: center;
+	font-weight: bold; 
+}
+
+h2{
+	font: 30px Anton-Regular, sans-serif;
+	color: white;
+    text-align: center;
+}
+
+article{
+    padding: 20px 40px;
+}
+
+p{
+	font-family: Open Sans Regular, sans-serif;
+	font-size: 20px;
+	color: black;
+	text-align: justify;
+	line-height: 30px;
+}
+
+#sec_instrucoes{
+    background-color: black;
+}
+
+ol {
+	list-style-type: decimal;
+    padding: 0px 40px;
+}
+
+li{
+	padding: 2px 0px;
+    font-family: Open Sans Regular, sans-serif;
+	font-size: 20px;
+	color: white;
+	text-align: justify;
+}
+
+h3{
+	font: 25px Anton-Regular, sans-serif;
+	color: white;
+	text-align: center;
+}
+
+form{
+	width: 400px;
+	margin: 0 auto;
+}
+
+#botoes_form{
+	display: block;
+}
+
+input{
+	height: 30px;
+	color: black;
+    font: 1rem Open Sans Regular, sans-serif;
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#input_text{
+    border: 1px solid black;
+}
+
+a{
+	font-family: Open Sans Regular, sans-serif;
+	text-decoration: none;
+}
+
+a:link, a:visited, a:after, a:before{
+	color: black;
+}
+
+input[type="submit"]{
+	background-color: #48F045;
+	border: 1px solid black;
+	border-radius: 5px;
+    text-align: center;
+    font-weight: bold; 
+    vertical-align: center;
+    margin: 15px 0px 0px 0px;
+    padding: 0px 75px 0px 75px;
+}
+
+footer{
+	background-color: black;
+	padding: 10px;
+}
+
+footer p{
+	text-align: center;
+	color: white;
+}
+
+/*Rank page e Aparições page*/
+
+table{
+    padding: 20px;
+    font-family: Anton-Regular, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 70%;
+ }
+
+th, td {
+    border: 1px solid black;
+    padding: 7px;
+    height: 50px;
+    width: 100px;
+    margin: 0 auto;
+ }
+
+ #sec_final{
+    background-color: black;
+	padding: 10px;
+ }
+
+ #sec_final p{
+    text-align: center;
+	color: white;
+    font-weight: medium; 
+ }
+
+ #sec_final a{
+    font-family: Open Sans Regular, sans-serif;
+	text-decoration: none;
+}
+
+#sec_final a:link, a:visited{
+    color: black;
+}
+
+#link_pag{
+    font-family: Anton-Regular, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+}
+
+td {
+    text-align: center;
+    background-color:#dfdede;
+    color: black;
+}
+
+#load {
+    position: fixed;
+    display: block;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ }

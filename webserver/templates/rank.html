@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Busca ranqueada</title>
+
+    <meta charset="utf-8">
+    <meta name="author" content="SGD" />
+    <meta name="keywords" content="Resumo, Artigos Científicos, Obras Literárias, Material Didádico, Síntese, Palavras, Expressões, Aparição, Relevância />
+    <meta name=" description"
+        content="Software que realiza a busca de palavras e expressões em livros e artigos com ranqueamento por aparição e relevância" />
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
+    <script>
+        async function makeFetch(num_pagina){
+            let urlFetch = "/aparicoes/";
+            const res = await fetch(urlFetch.concat(num_pagina), {
+                        method: 'GET',
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    const data_aparicoes = await res.json();
+
+                    localStorage.setItem('data', JSON.stringify(data_aparicoes));
+
+                    let data_res = JSON.parse(localStorage.getItem('data'));
+                    data_res = Object.values(data_res);
+
+                    console.log(data_res);
+        }
+    </script>
+
+</head>
+
+<body onload="loadRanking()">
+
+    <div id="loading" style="width:100%;height:720px;padding-bottom:100%;position:relative;">
+        <iframe src="https://giphy.com/embed/xTkcEQACH24SMPxIQg" width="100%" height="720px" style="position:absolute;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    </div>
+
+    <script>
+        async function loadRanking() {
+            try {
+
+                let verify = parseInt(localStorage.getItem('verify'))
+
+                let ranking;
+                let pagina;
+                let aparicoes;
+                let split;
+
+                let url = "http://localhost:3000/aparicoes";
+
+                let data_ranking = JSON.parse(localStorage.getItem('data_ranking'));
+                data_ranking = Object.values(data_ranking);
+
+                if (verify == 0){
+                    const res = await fetch('/ranking/' + localStorage.getItem('texto') + '/' + localStorage.getItem('file'), {
+                        method: 'GET',
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    const data_ranking = await res.json();
+
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("conteudo").style.display = "inline";
+
+                    verify += 1;
+                    localStorage.setItem('verify', verify);
+
+                    let data_ranking_values = Object.values(data_ranking);
+                    
+                    localStorage.setItem('data_ranking', JSON.stringify(data_ranking_values));
+
+                    for(let i = 0; i < data_ranking.length; i++) {
+
+                        split = data_ranking[i].split(" - ");
+
+                        ranking = "<tr><td>" + split[0] + "</td>";
+                        pagina = "<td><a href=''>" + split[1] + "</a></td>";
+                        aparicoes = "<td>" + split[2] + "</td></tr>";
+
+                        num_pagina = pagina.replace(/[^0-9]/g,'')
+                        //url_pagina = url.concat(num_pagina);
+
+                        makeFetch(num_pagina);
+
+                        pagina = "<td><a href='" + url + "' onclick='makeFetch(" + num_pagina + ")'>" + split[1] + "</a></td>";
+
+                        if (data_ranking_values[i] == "" || data_ranking_values[i] == undefined || ranking == undefined || ranking == "" || pagina == undefined || pagina == "" || aparicoes == undefined || aparicoes== ""){
+                            null
+                        } else {
+                            document.getElementById('table').innerHTML += ranking + pagina + aparicoes
+                        }
+
+                    }
+                } else {
+                
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("conteudo").style.display = "inline";
+
+                for(let i = 0; i < data_ranking.length; i++) {
+
+                    split = data_ranking[i].split(" - ");
+
+                    ranking = "<tr><td>" + split[0] + "</td>";
+                    pagina = "<td><a href=''>" + split[1] + "</a></td>";
+                    aparicoes = "<td>" + split[2] + "</td></tr>";
+
+                    num_pagina = pagina.replace(/[^0-9]/g,'')
+
+                    makeFetch(num_pagina);
+
+                    pagina = "<td><a href='" + url + "' onclick='makeFetch(" + num_pagina + ")'>" + split[1] + "</a></td>";
+
+                    if (data_ranking[i] == "" || data_ranking[i] == undefined || ranking == undefined || ranking == "" || pagina == undefined || pagina == "" || aparicoes == undefined || aparicoes== ""){
+                        null
+                    } else {
+                        document.getElementById('table').innerHTML += ranking + pagina + aparicoes
+                    }
+
+                }
+                }
+            } catch(err) {
+                console.log(err);
+            }
+        }
+      </script>
+
+    <div id="conteudo" style="display: none">
+
+        <section id="sec_titulo">
+
+            <h1>Ranking de Páginas</h1>
+    
+        </section>
+    
+        <section id="sec_tabela">
+            <table id="table">
+                <tr>
+                    <th >Ranking</th>
+                    <th><a id="link_pag" href="/aparicoes">
+                            Página
+                        </a></th>
+                    <th>Aparições</th>
+                </tr>
+            </table>
+        </section>
+    
+        <section id="sec_final">
+    
+            <a href="/">
+                <p>Voltar à página inicial</p>
+            </a>
+    
+        </section>
+    
+    </div>
+
+</html>

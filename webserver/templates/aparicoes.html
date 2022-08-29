@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Aparições</title>
+
+    <meta charset="utf-8">
+    <meta name="author" content="SGD" />
+    <meta name="keywords" content="Resumo, Artigos Científicos, Obras Literárias, Material Didádico, Síntese, Palavras, Expressões, Aparição, Relevância />
+    <meta name=" description"
+        content="Software que realiza a busca de palavras e expressões em livros e artigos com ranqueamento por aparição e relevância" />
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
+</head>
+
+<body onload = "teste()" >
+    
+    <script>
+        async function teste(){
+
+            let data = JSON.parse(localStorage.getItem('data'));
+
+            let nr_aparicao;
+            let aparicoes;
+            let split;
+
+            for(let i = 0; i <= data.length; i++) {
+
+                    split = data[i].split(" - ");
+                    split[1] = split[1].replace('�', '');
+                    split[1] = split[1].replace('', '');
+                    split[1] = split[1].replace('', '');
+                    split[1] = split[1].replace('', '');
+                    split[1] = split[1].replace('', '');
+                    split[1] = split[1].replace('�', '');
+                    split[1] = split[1].replace('Š', '');
+                    split[1] = split[1].replace('@', '');
+                    split[1] = split[1].replace('�', '');
+
+                    nr_aparicao = "<tr><td>" + (i+1) + "</td>";
+                    aparicoes = "<td>" + split[1] + "</td></tr>";
+
+                    //num_pagina = pagina.replace(/[^0-9]/g,'')
+                    //url_pagina = url.concat(num_pagina);
+
+                    pagina = "<td>" + split[1] + "</td>";
+
+                    if (nr_aparicao == null || aparicoes == undefined || aparicoes== ""){
+                        null
+                    } else {
+                        document.getElementById('table').innerHTML += nr_aparicao + aparicoes
+                    }
+
+                }
+        }
+    </script>
+
+    <section id="sec_titulo">
+
+        <h1>Aparições</h1>
+
+    </section>
+
+    <section id="sec_tabela">
+        <table id="table">
+            <tr>
+                <th>Nº</th>
+                <th>Aparições</th>
+            </tr>
+        </table>
+    </section>
+
+    <section id="sec_final">
+
+        <a href="/rank">
+            <p>Voltar ao ranking de páginas </p>
+        </a>
+        <a href="/">
+            <p> Voltar à página inicial</p>
+        </a>
+    </section>
+</body>
+
+</html>
